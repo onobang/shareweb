@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-md-block bg-light sidebar">
+      <app-sidebar></app-sidebar>
+    </nav>
+    <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="list row">
+        <div class="col-md-6">
+          <h4>DAFTAR KOSA KATA</h4>
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              *ngFor="let kosakata of kosakatas; let i = index"
+              [class.active]="i == currentIndex"
+              (click)="setActiveKosakata(kosakata, i)"
+            >
+              {{ kosakata.title }}
+            </li>
+          </ul>
+
+          <button class="m-3 btn btn-sm btn-danger" (click)="removeAllKosakatas()">
+            Remove All
+          </button>
+        </div>
+
+        <div class="col-md-6">
+          <div *ngIf="currentKosakata">
+            <app-kosakata-details
+              (refreshList)="refreshList()"
+              [kosakata]="currentKosakata"
+            ></app-kosakata-details>
+          </div>
+
+          <div *ngIf="!currentKosakata">
+            <br />
+            <p>Please click on a Kosakata...</p>
+          </div>
+        </div>
+      </div>
+      <app-add-kosakata></app-add-kosakata>
+
+    </main>
+
+  </div>
+</div>
+
+
+
+

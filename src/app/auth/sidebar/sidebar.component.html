@@ -1,0 +1,46 @@
+
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column"  *ngIf="authService.userData as user">
+      <li class="nav-item">
+        <a routerLink="/profile/{{user.uid}}" class="nav-link active">
+          <i-bs class="text-dark" name="person" width="1rem" height="1rem">
+          </i-bs> User Profile
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/pesan/{{user.uid}}">
+          <i-bs class="text-dark" name="envelope" width="1rem" height="1rem">
+          </i-bs> Pesan
+        </a>
+      </li>
+      <!-- Calling SignOut() Api from AuthService -->
+      <li class="nav-item">
+        <a routerLink="" class="nav-link" (click)="authService.SignOut()">
+          <i-bs class="text-danger" name="power" width="1rem" height="1rem">
+          </i-bs> Keluar
+        </a>
+      </li>
+    </ul>
+<!--     menu admin start -->
+    <div class="row" *ngIf="singleDoc |async as user">
+      <div class="col" *ngIf="user.userLevel === 'admin'">
+        <ul class="nav flex-column"  >
+          <li class="nav-item">
+            <a routerLink="/profile/{{user.uid}}" class="nav-link active">
+              <i-bs class="text-dark" name="person" width="1rem" height="1rem">
+              </i-bs> User Profile
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="user.userLevel === 'admin'">
+            <a routerLink="/manage-kosakata/{{user.uid}}" class="nav-link active">
+              <i-bs class="text-dark" name="file-earmark-plus-fill" width="1rem" height="1rem">
+              </i-bs> Kosa Kata
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+  </div>
+

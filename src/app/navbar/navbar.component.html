@@ -1,0 +1,124 @@
+<nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color: #0d47a1;">
+  <a class="navbar-brand" href="#">SHAR-e</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="" routerLinkActive="active-link">HOME</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="saran" routerLinkActive="active-link">SARAN</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="tentang-kami" routerLinkActive="active-link">TENTANG - KAMI</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="berita" routerLinkActive="active-link">BERITA</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="vidio" routerLinkActive="active-link">VIDIO</a>
+      </li>
+    </ul>
+
+    <div ngbDropdown class="d-inline-block">
+<!--      if not signed in-->
+<div *ngIf="!authService.isLoggedIn">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn" >
+        <i class="fa fa-lg text-light fa-google-plus" ></i>
+      </button>
+      <button class="btn" >
+      <i class="fa fa-lg text-light fa-twitter" ></i>
+      </button>
+      <button class="btn"  id="dropdownBasic1" ngbDropdownToggle>
+        <i-bs class="text-light" name="person" width="1.5rem" height="1.5rem">
+        </i-bs>
+      </button>
+      <!--          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>-->
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-pull-right">
+        <button ngbDropdownItem  (click)="open(content)">Masuk</button>
+        <button routerLink="logup" ngbDropdownItem>Daftar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--if signed in-->
+      <div *ngIf="authService.isLoggedIn" >
+        <div class="col">
+        <div ngbDropdown class="leld-inline-block">
+          <button class="btn"  id="dropdownBasic2" ngbDropdownToggle>
+            <i-bs name="person-circle" class="text-light" width="1.5rem" height="1.5rem">
+            </i-bs>
+          </button>
+          <!--          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>-->
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-pull-right" *ngIf="authService.userData as user">
+            <a routerLink="/profile/{{user.uid}}" class="text-info" ngbDropdownItem>
+              <i-bs name="person-lines-fill" width="1.5rem" height="1.5rem">
+              </i-bs>
+              Profile
+            </a>
+            <a routerLink=""  class="text-danger" ngbDropdownItem (click)="authService.SignOut()">
+              <i-bs name="power" width="1.5rem" height="1.5rem">
+            </i-bs> Keluar</a>
+          </div>
+        </div>
+      </div></div>
+
+
+    </div>
+  </div>
+</nav>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Akun Saya</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<!--sign in form start-->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin">
+              <div class="form-label-group">
+
+                <input type="text" class="form-control mb-3" placeholder="e-mail" aria-label="Username" aria-describedby="addon-wrapping" #userName required>
+              </div>
+
+              <div class="form-label-group">
+
+                <input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
+
+              </div>
+
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
+              </div>
+
+              <input type="button" class="btn btn-lg btn-primary btn-block text-uppercase" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
+
+              <hr class="my-4">
+
+              <button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" (click)="authService.GoogleAuth()">Sign In with Google</button>
+              <button class="btn btn-lg bg-danger btn-block text-uppercase" type="submit">Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>

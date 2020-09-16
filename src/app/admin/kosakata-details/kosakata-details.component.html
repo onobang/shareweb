@@ -1,0 +1,59 @@
+<div *ngIf="currentKosakata" class="edit-form">
+  <h4>Kosakata</h4>
+  <form>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        [(ngModel)]="currentKosakata.title"
+        name="title"
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        [(ngModel)]="currentKosakata.description"
+        name="description"
+      />
+    </div>
+
+    <div class="form-group">
+      <label><strong>Status:</strong></label>
+      {{ currentKosakata.published ? "Published" : "Pending" }}
+    </div>
+  </form>
+
+  <button
+    class="badge badge-primary mr-2"
+    *ngIf="currentKosakata.published"
+    (click)="updatePublished(false)"
+  >
+    UnPublish
+  </button>
+  <button
+    *ngIf="!currentKosakata.published"
+    class="badge badge-primary mr-2"
+    (click)="updatePublished(true)"
+  >
+    Publish
+  </button>
+
+  <button class="badge badge-danger mr-2" (click)="deleteKosakata()">
+    Delete
+  </button>
+
+  <button type="submit" class="badge badge-success" (click)="updateKosakata()">
+    Update
+  </button>
+  <p>{{ message }}</p>
+</div>
+
+<div *ngIf="!currentKosakata">
+  <br />
+  <p>Cannot access this Kosakata...</p>
+</div>
